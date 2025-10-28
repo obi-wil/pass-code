@@ -79,9 +79,9 @@ code_add_random() {
 
 # Lists decoded files, assuming encoded hierarchy is flat
 code_list_files() {
-	cmd_show \
-		| tail -n +2 \
-		| cut -d ' ' -f 2 \
+	find "$PREFIX" -maxdepth 1 -name "*.gpg" -print \
+		| sed -e "s#^$PREFIX/##" -e 's#\.gpg$##' \
+		| grep -v "^\.passcode$" \
 		| code_decode \
 		| sort
 }
